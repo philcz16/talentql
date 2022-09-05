@@ -37,7 +37,7 @@ jobs:
 
       - name: Show parsed data JSON
         run: |
-          echo "${{ steps.parse.outputs.payload }}"
+          echo "${{env.ISSUE_BODY}}"
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
         uses: aquasecurity/trivy-action@0.0.7
