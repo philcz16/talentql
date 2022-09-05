@@ -29,31 +29,23 @@ jobs:
       # Build this step in the workflow. Refer to the linked document in the README for more details
       - name: TODO - Scan Vulnerabilities
         run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
-jobs:
-  issue_parser:
-    runs-on: ubuntu-latest
-    name: Grab body of latest issue
-    steps:
-    - name: Parse latest GitHub issue
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      uses: daniyalj/ga-hello-world@v1
-      with:
-        org_name: 'philcz16'
-        repo_name: 'talent'
-        global_email: 'phil16terpasetheo@gmail.com'      
 
-jobs:
-  build:
-    name: vulnerability scanner
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+      - name: Trivy Scan - Unknown, Low and Medium Severity
+        uses: aquasecurity/trivy-action@0.0.7
         with:
-          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
-          format: 'table'
-          exit-code: '1'
-          ignore-unfixed: true
-          vuln-type: 'os,library'
-          severity: 'CRITICAL,HIGH'
+          # image reference
+          image-ref: ruby:2.4.0
+          # exit code when vulnerabilities were found
+          exit-code: 0
+          # severities of vulnerabilities to be displayed
+          severity: UNKNOWN,LOW,MEDIUM
+          
+      - name: Trivy Scan - High and Critical Severity
+        uses: aquasecurity/trivy-action@0.0.7
+        with:
+          # image reference
+          image-ref: ruby:2.4.0
+          # exit code when vulnerabilities were found
+          exit-code: 1
+          # severities of vulnerabilities to be displayed
+          severity: HIGH,CRITICAL
