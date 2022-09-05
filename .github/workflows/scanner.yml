@@ -31,11 +31,11 @@ jobs:
       #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
 
       - name: Parse Github Issue
-        uses: stefanbuck/github-issue-parser@v2
+      - uses: stefanbuck/github-issue-parser@v2
         run: echo '${{ steps.issue-parser.outputs.jsonString }}' > bug-details.json
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
-      - uses: aquasecurity/trivy-action@0.0.7
+        uses: aquasecurity/trivy-action@0.0.7
         with:
           # image reference
           image-ref: ruby:2.4.0
