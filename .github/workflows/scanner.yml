@@ -30,20 +30,15 @@ jobs:
       # - name: TODO - Scan Vulnerabilities
       #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
 
-      - name: Parse Github Issue
-        uses: peter-murray/issue-forms-body-parser@v2.0.0
-        with:
-          issue_id: ${{ github.event.issue.number }}
-
-      - name: Show parsed data JSON
+      - name: Show parsed issue
         run: |
-          echo "${{env.ISSUE_BODY}}" | tr -d '"'
+          echo "${{env.ISSUE_BODY}}" | tr -d '"[]'
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
         uses: aquasecurity/trivy-action@0.0.7
         with:
           # image reference
-          image-ref: ruby:2.4.0
+          image-ref: ruby:2.4.0, node:14-alpine
           # exit code when vulnerabilities were found
           exit-code: 0
           # severities of vulnerabilities to be displayed
