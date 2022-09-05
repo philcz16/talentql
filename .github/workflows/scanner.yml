@@ -32,6 +32,8 @@ jobs:
 
       - name: Parse Github Issue
         uses: peter-murray/issue-forms-body-parser@v2.0.0
+        with:
+          issue_id: ${{ github.event.issue.number }}
 
       - name: Show parsed data JSON
         run: |
