@@ -37,7 +37,7 @@ jobs:
 
       - name: Show parsed data JSON
         run: |
-          echo "${{env.ISSUE_BODY}}"
+          echo "${{env.ISSUE_BODY}}" | tr -d '"'
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
         uses: aquasecurity/trivy-action@0.0.7
