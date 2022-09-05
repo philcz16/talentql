@@ -31,8 +31,15 @@ jobs:
       #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
 
       - name: Parse Github Issue
-      - uses: stefanbuck/github-issue-parser@v2
-        run: echo '${{ steps.issue-parser.outputs.jsonString }}' > bug-details.json
+        uses: peter-murray/issue-forms-body-parser@v2.0.0
+        with:
+          separator: '|'
+          label_marker_start: '['
+          label_marker_end: ']'
+
+      - name: Show parsed data JSON
+        run: |
+          echo "${{ steps.parse.outputs.payload }}"
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
         uses: aquasecurity/trivy-action@0.0.7
