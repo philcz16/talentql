@@ -27,8 +27,13 @@ jobs:
 
       # TASK/TODO: 
       # Build this step in the workflow. Refer to the linked document in the README for more details
-      - name: TODO - Scan Vulnerabilities
-        run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
+      # - name: TODO - Scan Vulnerabilities
+      #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
+
+      - name: Parse Github Issue
+        uses: actionsdesk/parse-issue@v1
+        inputs:
+          extract_image_name: '[image_name]'
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
         uses: aquasecurity/trivy-action@0.0.7
@@ -40,12 +45,12 @@ jobs:
           # severities of vulnerabilities to be displayed
           severity: UNKNOWN,LOW,MEDIUM
           
-      - name: Trivy Scan - High and Critical Severity
-        uses: aquasecurity/trivy-action@0.0.7
-        with:
-          # image reference
-          image-ref: ruby:2.4.0
-          # exit code when vulnerabilities were found
-          exit-code: 1
-          # severities of vulnerabilities to be displayed
-          severity: HIGH,CRITICAL
+      # - name: Trivy Scan - High and Critical Severity
+      #   uses: aquasecurity/trivy-action@0.0.7
+      #   with:
+      #     # image reference
+      #     image-ref: ruby:2.4.0
+      #     # exit code when vulnerabilities were found
+      #     exit-code: 1
+      #     # severities of vulnerabilities to be displayed
+      #     severity: HIGH,CRITICAL
