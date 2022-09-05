@@ -35,7 +35,7 @@ jobs:
         run: echo '${{ steps.issue-parser.outputs.jsonString }}' > bug-details.json
 
       - name: Trivy Scan - Unknown, Low and Medium Severity
-        uses: aquasecurity/trivy-action@0.0.7
+      - uses: aquasecurity/trivy-action@0.0.7
         with:
           # image reference
           image-ref: ruby:2.4.0
