@@ -35,8 +35,8 @@ jobs:
           test=$(echo "["node:14-alpine","python:3.4-alpine"]" | tr -d '[]' | tr -s "," " ")
           array=($test)
           for str in ${array[@]}; do
-          trivy image --exit-code 0 --severity MEDIUM,HIGH echo $str
-          trivy image --exit-code 1 --severity CRITICAL echo $str 
+          ./trivy image --exit-code 0 --severity MEDIUM,HIGH echo $str
+          ./trivy image --exit-code 1 --severity CRITICAL echo $str 
           done
       # - name: Trivy Scan - Unknown, Low and Medium Severity
       #   uses: aquasecurity/trivy-action@0.0.7
