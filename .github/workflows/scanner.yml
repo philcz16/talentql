@@ -38,8 +38,9 @@ jobs:
           array=($test)
           for image in ${array[@]}; do
           echo "------------ Scanning $image ------------------"
-          trivy image --exit-code 0 --severity MEDIUM,HIGH,CRITICAL $(echo $image) >> file.txt
+          trivy image --exit-code 0 --severity HIGH,CRITICAL $(echo $image) >> file.txt
           cat file.txt
+          result=$( egrep -v "HIGH|CRITICAL" )
           done
         #file.txt
         #curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/philcz16/talentql/issues/${{ github.event.issue.number }}/comments -g -d @file.json
