@@ -31,10 +31,10 @@ jobs:
       # - name: TODO - Scan Vulnerabilities
       #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
 
-      - name: Show parsed issue
+      - name: Scan docker images from issue with trivy
         shell: bash
         run: |
-          test=$(echo "["node:14-alpine","python:3.4-alpine"]" | tr -d '[]' | tr -s "," " ")
+          test=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
           array=($test)
           for image in ${array[@]}; do
           echo "------------ Scanning $image ------------------"
