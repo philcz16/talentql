@@ -34,9 +34,9 @@ jobs:
       - name: Scan docker images from Github issue with trivy
         shell: bash
         run: |
-          issue_body=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
-          array=($issue_body)
+          test=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
+          array=($test)
           for image in ${array[@]}; do
           echo "------------ Scanning $image ------------------"
-          trivy image --exit-code 0 --severity MEDIUM, HIGH, CRITICAL $(echo $image)
+          trivy image --exit-code 0 --severity MEDIUM,HIGH,CRITICAL $(echo $image)
           done
