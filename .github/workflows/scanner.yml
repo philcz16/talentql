@@ -38,7 +38,7 @@ jobs:
           array=($test)
           for image in ${array[@]}; do
           echo "Scanning $image"
-          trivy image --exit-code 0 --severity MEDIUM,HIGH echo $image
+          trivy image --exit-code 0 --severity MEDIUM,HIGH $(echo $image)
           done
       # - name: Trivy Scan - Unknown, Low and Medium Severity
       #   uses: aquasecurity/trivy-action@0.0.7
