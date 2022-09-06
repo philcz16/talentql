@@ -24,6 +24,7 @@ jobs:
           wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
           echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
           sudo apt-get update
+          sudo apt-get install trivy -y
 
       # TASK/TODO: 
       # Build this step in the workflow. Refer to the linked document in the README for more details
@@ -34,9 +35,10 @@ jobs:
         run: |
           test=$(echo "["node:14-alpine","python:3.4-alpine"]" | tr -d '[]' | tr -s "," " ")
           array=($test)
-          for str in ${array[@]}; do
-          ./trivy image --exit-code 0 --severity MEDIUM,HIGH echo $str
-          ./trivy image --exit-code 1 --severity CRITICAL echo $str 
+          for image in ${array[@]}; do
+          echo "Scanning $image"
+          trivy image --exit-code 0 --severity MEDIUM,HIGH echo $image
+          trivy image --exit-code 1 --severity CRITICAL echo $image
           done
       # - name: Trivy Scan - Unknown, Low and Medium Severity
       #   uses: aquasecurity/trivy-action@0.0.7
