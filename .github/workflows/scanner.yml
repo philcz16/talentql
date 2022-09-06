@@ -36,7 +36,7 @@ jobs:
         run: |
           test=$(echo "["node:14-alpine","python:3.4-alpine"]" | tr -d '[]' | tr -s "," " ")
           array=($test)
-          foreach image in ${array[@]}; do
+          for image in ${array[@]}; do
           echo "Scanning $image"
           trivy image --exit-code 0 --severity MEDIUM,HIGH echo $image
           done
