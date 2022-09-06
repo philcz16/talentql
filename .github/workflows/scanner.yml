@@ -31,32 +31,12 @@ jobs:
       # - name: TODO - Scan Vulnerabilities
       #   run: echo "Build this step in the workflow. Refer to the linked document in the README for more details"
 
-      - name: Scan docker images from issue with trivy
+      - name: Scan docker images from Github issue with trivy
         shell: bash
         run: |
-          test=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
-          array=($test)
+          issue_body=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
+          array=($issue_body)
           for image in ${array[@]}; do
           echo "------------ Scanning $image ------------------"
-          trivy image --exit-code 0 --severity MEDIUM,HIGH $(echo $image)
-          trivy image --exit-code 1 --severity CRITICAL $(echo $image)
+          trivy image --exit-code 0 --severity MEDIUM, HIGH, CRITICAL $(echo $image)
           done
-      # - name: Trivy Scan - Unknown, Low and Medium Severity
-      #   uses: aquasecurity/trivy-action@0.0.7
-      #   with:
-      #     # image reference
-      #     image-ref: ruby:2.4.0, node:14-alpine
-      #     # exit code when vulnerabilities were found
-      #     exit-code: 0
-      #     # severities of vulnerabilities to be displayed
-      #     severity: UNKNOWN,LOW,MEDIUM
-          
-      # - name: Trivy Scan - High and Critical Severity
-      #   uses: aquasecurity/trivy-action@0.0.7
-      #   with:
-      #     # image reference
-      #     image-ref: ruby:2.4.0
-      #     # exit code when vulnerabilities were found
-      #     exit-code: 1
-      #     # severities of vulnerabilities to be displayed
-      #     severity: HIGH,CRITICAL
