@@ -32,17 +32,21 @@ jobs:
 
       - name: Show parsed issue
         run: |
-          echo "${{env.ISSUE_BODY}}" | tr -d '"[]'
-
-      - name: Trivy Scan - Unknown, Low and Medium Severity
-        uses: aquasecurity/trivy-action@0.0.7
-        with:
-          # image reference
-          image-ref: ruby:2.4.0, node:14-alpine
-          # exit code when vulnerabilities were found
-          exit-code: 0
-          # severities of vulnerabilities to be displayed
-          severity: UNKNOWN,LOW,MEDIUM
+          test=$(echo "["node:14-alpine","python:3.4-alpine"]" | tr -d '[]' | tr -s "," " ")
+          array=($test)
+          for str in ${array[@]}; do
+          trivy image --exit-code 0 --severity MEDIUM,HIGH echo $str
+          trivy image --exit-code 1 --severity CRITICAL echo $str 
+          done
+      # - name: Trivy Scan - Unknown, Low and Medium Severity
+      #   uses: aquasecurity/trivy-action@0.0.7
+      #   with:
+      #     # image reference
+      #     image-ref: ruby:2.4.0, node:14-alpine
+      #     # exit code when vulnerabilities were found
+      #     exit-code: 0
+      #     # severities of vulnerabilities to be displayed
+      #     severity: UNKNOWN,LOW,MEDIUM
           
       # - name: Trivy Scan - High and Critical Severity
       #   uses: aquasecurity/trivy-action@0.0.7
