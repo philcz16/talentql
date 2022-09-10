@@ -42,12 +42,9 @@ jobs:
           result=$( tail -n 1 scan.txt )
           if [[ "$check" == "$result" ]]
           then
-          echo "[$image,SAFE"] >> result.txt
+          echo "[$image,SAFE"] >> result.json
           else
-          echo "[$image,UNSAFE"] >> result.txt
-          cat result.txt
+          echo "[$image,UNSAFE"] >> result.json
           fi
+          curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/philcz16/talentql/issues/${{ github.event.issue.number }}/comments -g -d @result.json
           done
-      - name: Comment on issue on scan result
-        run: |
-          curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/philcz16/talentql/issues/${{ github.event.issue.number }}/comments -g -d @result.txt
