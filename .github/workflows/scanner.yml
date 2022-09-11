@@ -49,11 +49,11 @@ jobs:
           fi
           done
       - name: Post comment on scan result
-      id: comment
+        id: comment
         run: |
           comment=$(jq -Rs '[ split("\n")[] | select(length > 0) 
           | split(",") | {image: .[0], status: .[1]} ]' result.txt)
           echo "::set-output name=comment_issue::$(echo $comment)"
-        uses: KeisukeYamashita/create-comment@v1
+      - uses: KeisukeYamashita/create-comment@v1
         with:
           comment: ${{ steps.comment.outputs.comment_issue }} 
