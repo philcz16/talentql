@@ -42,9 +42,9 @@ jobs:
           result=$( tail -n 1 scan.txt )
           if [[ "$check" == "$result" ]]
           then
-          echo "[{$image,SAFE}]" >> result.txt
+          echo "$image,SAFE" >> result.txt
           else
-          echo "[{$image,UNSAFE}]" >> result.txt
+          echo "$image,UNSAFE" >> result.txt
           jq -Rs '[ split("\n")[] | select(length > 0) 
           | split(",") | {image: .[0], status: .[1]} ]' result.txt > result.json
           fi
