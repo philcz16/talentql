@@ -31,7 +31,7 @@ input=$(echo ${{ github.event.issue.body }} | tr -d '[]' | tr -s "," " ")
 - Looped through the array of the images using a for loop.
 - Once that was done, I used a custom [trivy template](https://aquasecurity.github.io/trivy/v0.17.0/examples/report/) to scan each images. The result is the vulnerability severity and the number of occurrence 
 ```
- Critical: 0, High: 0
+ Critical: 0, High: 0, Medium: 0
 ```
 this information is written into a file ``` tee -a scan.txt ``` 
 - A variable called ``` $check ``` is created and used to compare the result of the Vulnerability scan, if the value of check and the scan is the same the image is marked as **SAFE** while marked as **UNSAFE** otherwise this result is stored in a file `result.txt`
