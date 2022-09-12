@@ -39,6 +39,7 @@ jobs:
           for image in ${array[@]}; do
           echo "------------ Scanning $image -----------------"
           trivy image --format template --template '{{- $critical := 0 }}{{- $high := 0 }}{{- $medium := 0 }}{{- range . }}{{- range .Vulnerabilities }}{{- if  eq .Severity "CRITICAL" }}{{- $critical = add $critical 1 }}{{- end }}{{- if  eq .Severity "HIGH" }}{{- $high = add $high 1 }}{{- end }}{{- if  eq .Severity "MEDIUM" }}{{- $medium = add $medium 1 }}{{- end }}{{- end }}{{- end }}Critical: {{ $critical }}, High: {{ $high }}, Medium: {{ $medium }}' $(echo $image) | tee -a scan.txt
+          echo "" >> scan.txt
           result=$( tail -n 1 scan.txt )
           check="Critical: 0, High: 0, Medium: 0"
           if [[ "$check" == "$result" ]]
