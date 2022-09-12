@@ -1,13 +1,13 @@
-#Objective
+# Objective
 Users create issues containing a list of container images which triggers a Github Action workflow that scans the images for vulnerability and reports safe and unsafe images as a comment to the issue.
 
-#Tools used
+# Tools used
 - [GitHub Actions](https://docs.github.com/en/actions)
 - [Trivy](https://aquasecurity.github.io/trivy/v0.17.0/)
 - bash
 - [jq](https://devdocs.io/jq/)
 
-#How Does it work?
+# How Does it work?
 
 - When a user creates an issue with the issue body containing a list of images to scan, the Github action workflow is triggered. 
 ```
